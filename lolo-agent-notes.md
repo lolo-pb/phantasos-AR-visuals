@@ -2,83 +2,77 @@
 
 ## What This Is
 
-Mobile-first WebAR MVP.
+Mobile WebAR MVP.
 
-The intended flow is:
+Current working flow:
 
-1. User scans a QR code.
-2. QR opens this web app over HTTPS.
-3. User allows camera access.
-4. App scans for an image target.
-5. When the target is recognized, a Three.js 3D object appears anchored on top of that target.
+1. User opens the site from a link or QR code.
+2. Browser asks for camera access.
+3. App looks for the MindAR sample card image.
+4. When the card is recognized, a small rotating cube appears on top of it.
 
-For the MVP, the QR code is just a link to the hosted HTTPS page. The QR graphic is not automatically the AR tracking target unless its printed image is also compiled into a MindAR `.mind` target file.
+For now the QR only opens the page. It is not the AR marker unless that exact QR image is later compiled into a MindAR `.mind` target.
 
-## Stack
+## Current Stack
 
-- `Vite` runs and builds the web app.
-- `Three.js` renders the 3D object.
-- `MindAR` handles camera image tracking.
-- `@vitejs/plugin-basic-ssl` allows local HTTPS testing with `npm run dev:https`.
+- `Vite` is only used to run/build the static page.
+- `@vitejs/plugin-basic-ssl` lets `npm run dev:https` serve local HTTPS.
+- `A-Frame` loads from CDN in `index.html`.
+- `MindAR` image tracking loads from CDN in `index.html`.
 
-MindAR is installed locally and bundled by Vite.
-The SSL plugin is pinned to a Vite 5 compatible version so `npm install` works reproducibly.
-Three.js is pinned to a MindAR-compatible version.
+There are currently no runtime npm dependencies. This avoids the Windows `canvas` / `node-gyp` install problem.
 
-## Project Shape
+## Current Project Shape
 
-- `index.html` mounts the app.
-- `src/main.js` wires the app shell, support checks, AR session, scene manager, and hero behavior.
-- `src/app` owns the visible UI overlays and browser support checks.
-- `src/ar/ARSessionController.js` owns MindAR startup, stop/restart, target found, and target lost events.
-- `src/scene` owns the Three.js scene bridge and hero asset loading.
-- `src/experience/HeroExperience.js` owns the reveal/fade/rotation behavior after tracking locks.
-- `src/config/experience.js` is the main place to change target URLs, model URLs, and user-facing copy.
-- `public/assets/targets` is where compiled MindAR `.mind` targets should go.
-- `public/assets/models` is where `hero.glb` should go.
+- `index.html` is the active app.
+- `package.json` has only Vite-related dev dependencies.
+- `public/assets/targets` is where future local `.mind` target files should go.
+- `public/assets/models` is where future local models can go.
+- `src/` still contains the older custom Three.js app, but it is not used by the current MVP page.
 
-## Current Runtime Flow
+## Current Runtime Details
 
-`src/main.js` renders the shell, checks secure context/camera/WebGL support, then starts the AR session.
+`index.html` loads:
 
-`ARSessionController` imports MindAR from the local `mind-ar` package.
+```text
+https://aframe.io/releases/1.5.0/aframe.min.js
+https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js
+```
 
-It currently tracks MindAR's remote sample card target:
+The current target is MindAR's sample card:
 
-`https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/image-tracking/assets/card-example/card.mind`
+```text
+https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/image-tracking/assets/card-example/card.mind
+```
 
-When MindAR creates an anchor, `SceneManager` attaches the hero object to that anchor. If `/assets/models/hero.glb` does not exist, the app shows a procedural fallback object instead.
+The image to point the camera at is:
+
+```text
+https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/image-tracking/assets/card-example/card.png
+```
 
 ## Scripts
 
-- `npm install` installs dependencies.
-- `npm run dev` starts Vite over normal local HTTP.
-- `npm run dev:https` starts Vite with a local HTTPS certificate.
-- `npm run build` builds the app.
-- `npm run preview` serves the production build locally.
+- `npm install` installs only the Vite dev tooling.
+- `npm run dev` starts normal local HTTP.
+- `npm run dev:https` starts local HTTPS for camera testing.
+- `npm run build` builds the static page.
+- `npm run preview` serves the production build.
 
-Camera access requires HTTPS or localhost. A phone opening a LAN URL usually needs HTTPS.
+Camera access needs HTTPS or localhost. For phone testing, a public HTTPS deploy/tunnel is usually easier than LAN/WSL networking.
 
-## MVP Gaps
+## Next Real MVP Steps
 
-- There is no local `hero.glb` yet, so the app uses the procedural fallback.
-- There is no local compiled `.mind` target yet, so the app uses MindAR's sample target.
-- There is no deployment config yet for a real public HTTPS URL.
-- There is no generated QR code asset in the repo yet.
-- npm dependencies install and the production build passes.
-
-## Simple Path To A Real MVP
-
-1. Pick the printed tracking image. If the QR itself should hold the object, compile that same QR image as the MindAR target.
-2. Use the MindAR compiler to create a `.mind` file.
-3. Put the `.mind` file in `public/assets/targets`.
-4. Update `imageTargetSrc` in `src/config/experience.js`.
-5. Put the model at `public/assets/models/hero.glb`, or keep the fallback while testing.
-6. Deploy the Vite build to any static HTTPS host.
-7. Generate a QR code pointing to that HTTPS URL.
-8. Test on a real phone browser, not an in-app browser first.
+1. Decide if the QR is only the link or also the AR marker.
+2. Pick the real printed marker image.
+3. Compile that image into a MindAR `.mind` file.
+4. Put the `.mind` file in `public/assets/targets`.
+5. Change `imageTargetSrc` in `index.html` to the local `.mind` file.
+6. Replace the cube with the real model or visual.
+7. Deploy to a public HTTPS URL.
+8. Generate the QR code pointing to that URL.
 
 ## Suggestions / Uncertainty
 
-- Decide whether the QR code itself is the tracking marker or only the link that opens the app. Those are different assets and workflows.
-- For fewer runtime surprises, consider serving MindAR and the `.mind` target locally instead of depending on CDN URLs.
+- Keep the current simple A-Frame/MindAR page until the phone + marker + cube loop is reliable.
+- After the AR loop works, decide whether to delete the unused `src/` custom Three.js app or revive it for a more controlled experience.
