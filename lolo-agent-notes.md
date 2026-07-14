@@ -22,6 +22,7 @@ For the MVP, the QR code is just a link to the hosted HTTPS page. The QR graphic
 - `@vitejs/plugin-basic-ssl` allows local HTTPS testing with `npm run dev:https`.
 
 MindAR is currently loaded from jsDelivr at runtime, not installed as a local package.
+The SSL plugin is pinned to a Vite 5 compatible version so `npm install` works reproducibly.
 
 ## Project Shape
 
@@ -65,7 +66,7 @@ Camera access requires HTTPS or localhost. A phone opening a LAN URL usually nee
 - There is no local compiled `.mind` target yet, so the app uses MindAR's sample target.
 - There is no deployment config yet for a real public HTTPS URL.
 - There is no generated QR code asset in the repo yet.
-- `node_modules` is not installed in this checkout right now.
+- npm dependencies install and the production build passes.
 
 ## Simple Path To A Real MVP
 
