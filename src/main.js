@@ -1,7 +1,7 @@
 import "./styles.css";
 import { appConfig } from "./config/experience.js";
 import { AppShell } from "./app/AppShell.js";
-import { isWebARSupported } from "./app/support.js";
+import { getWebARSupportReport } from "./app/support.js";
 import { ARSessionController } from "./ar/ARSessionController.js";
 import { SceneManager } from "./scene/SceneManager.js";
 import { HeroExperience } from "./experience/HeroExperience.js";
@@ -11,10 +11,11 @@ const mountNode = document.querySelector("#app");
 const shell = new AppShell({ mountNode, appConfig });
 shell.render();
 
-if (!isWebARSupported()) {
+const supportReport = getWebARSupportReport();
+
+if (!supportReport.supported) {
   shell.setState("unsupported", {
-    detail:
-      "This experience needs a modern browser with camera access and WebGL."
+    detail: supportReport.message
   });
 } else {
   bootstrap().catch((error) => {
