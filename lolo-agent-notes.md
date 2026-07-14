@@ -21,8 +21,9 @@ For the MVP, the QR code is just a link to the hosted HTTPS page. The QR graphic
 - `MindAR` handles camera image tracking.
 - `@vitejs/plugin-basic-ssl` allows local HTTPS testing with `npm run dev:https`.
 
-MindAR is currently loaded from jsDelivr at runtime, not installed as a local package.
+MindAR is installed locally and bundled by Vite.
 The SSL plugin is pinned to a Vite 5 compatible version so `npm install` works reproducibly.
+Three.js is pinned to a MindAR-compatible version.
 
 ## Project Shape
 
@@ -40,9 +41,7 @@ The SSL plugin is pinned to a Vite 5 compatible version so `npm install` works r
 
 `src/main.js` renders the shell, checks secure context/camera/WebGL support, then starts the AR session.
 
-`ARSessionController` dynamically imports the MindAR runtime from:
-
-`https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-three.prod.js`
+`ARSessionController` imports MindAR from the local `mind-ar` package.
 
 It currently tracks MindAR's remote sample card target:
 

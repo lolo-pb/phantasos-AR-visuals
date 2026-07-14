@@ -18,6 +18,13 @@ export class HeroAssetFactory {
   }
 
   async #loadModel() {
+    const response = await fetch(this.modelUrl, { method: "HEAD" });
+    const contentType = response.headers.get("content-type") || "";
+
+    if (!response.ok || contentType.includes("text/html")) {
+      throw new Error(`Model asset not found: ${this.modelUrl}`);
+    }
+
     const gltf = await this.loader.loadAsync(this.modelUrl);
     return gltf.scene;
   }
@@ -97,4 +104,3 @@ export class HeroAssetFactory {
     return group;
   }
 }
-

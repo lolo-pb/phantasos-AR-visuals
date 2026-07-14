@@ -67,7 +67,11 @@ export class SceneManager {
     this.camera = camera;
     this.renderer = renderer;
 
-    this.renderer.outputColorSpace = THREE.SRGBColorSpace;
+    if ("outputColorSpace" in this.renderer && THREE.SRGBColorSpace) {
+      this.renderer.outputColorSpace = THREE.SRGBColorSpace;
+    } else {
+      this.renderer.outputEncoding = THREE.sRGBEncoding;
+    }
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 1.1;
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));

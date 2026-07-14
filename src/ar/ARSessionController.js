@@ -1,3 +1,4 @@
+import { MindARThree } from "mind-ar/dist/mindar-image-three.prod.js";
 import { EventEmitter } from "../lib/EventEmitter.js";
 
 export class ARSessionController {
@@ -9,7 +10,6 @@ export class ARSessionController {
     this.anchor = null;
     this.running = false;
     this.ready = false;
-    this.MindARThree = null;
   }
 
   on(eventName, handler) {
@@ -44,12 +44,15 @@ export class ARSessionController {
 
       this.emitter.emit("scanning");
     } catch (error) {
+      console.error("AR session start failed.", error);
       const message = String(error?.message || error || "");
       if (message.toLowerCase().includes("permission")) {
         this.emitter.emit("permissiondenied");
       } else {
         this.emitter.emit("error", {
-          message: "Unable to start the camera session."
+          message: message
+            ? `Unable to start the camera session: ${message}`
+            : "Unable to start the camera session."
         });
       }
     }
@@ -67,12 +70,7 @@ export class ARSessionController {
   }
 
   async #createSession() {
-    if (!this.MindARThree) {
-      const runtime = await import(/* @vite-ignore */ this.tracking.runtimeUrl);
-      this.MindARThree = runtime.MindARThree;
-    }
-
-    this.mindarThree = new this.MindARThree({
+    this.mindarThree = new MindARThree({
       container: this.container,
       imageTargetSrc: this.tracking.imageTargetSrc,
       maxTrack: this.tracking.maxTrack,
