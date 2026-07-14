@@ -4,10 +4,11 @@ Mobile-first WebAR MVP using MindAR for image tracking and Three.js for renderin
 
 ## Current state vvv
 
-| Detection | 3D Ray ayanami |
-| :---: | :---: |
-| ![WhatsApp Image 2026-07-14 at 00 29 36 (1)](https://github.com/user-attachments/assets/f81a3daf-d170-4c93-9d05-55474dca39ab) | ![WhatsApp Image 2026-07-14 at 00 29 36](https://github.com/user-attachments/assets/d11a5cc5-b79d-48cd-8c86-40ec82f4ceb8) |
+| Permission | Detection | 3D Ray ayanami |
+| :---: | :---: | :---: |
+| <img width="720" height="1600" alt="image" src="https://github.com/user-attachments/assets/06f7bcb7-bdbc-405a-8171-0c1e8346dd08" /> | ![WhatsApp Image 2026-07-14 at 00 29 36 (1)](https://github.com/user-attachments/assets/f81a3daf-d170-4c93-9d05-55474dca39ab) | <img width="720" height="1600" alt="image" src="https://github.com/user-attachments/assets/74641bad-6cba-4028-a757-aea2046a10c7" /> |
 
+if you look carefully i doxed myself there ( -_•)ᡕᠵデᡁ᠊╾━💥
 
 ## Stack
 
