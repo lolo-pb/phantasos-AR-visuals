@@ -75,8 +75,14 @@ Camera access needs HTTPS or localhost. For phone testing, a public HTTPS deploy
 3. Tune model `position`, `rotation`, and `scale` in `index.html`.
 4. If needed, replace `cat.mind` with the final printed marker.
 5. If needed, replace the Rei plush model with the final model or visual.
-7. Deploy to a public HTTPS URL.
-8. Generate the QR code pointing to that URL.
+6. Deploy to a public HTTPS URL.
+7. Generate the QR code pointing to that URL.
+
+MindAR target compiler:
+
+```text
+https://hiukim.github.io/mind-ar-js-doc/tools/compile/
+```
 
 ## Suggestions / Uncertainty
 
