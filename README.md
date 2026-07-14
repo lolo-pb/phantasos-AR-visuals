@@ -2,6 +2,13 @@
 
 Mobile-first WebAR MVP using MindAR for image tracking and Three.js for rendering.
 
+## Current state vvv
+
+| Detection | 3D Ray ayanami |
+| :---: | :---: |
+| ![WhatsApp Image 2026-07-14 at 00 29 36 (1)](https://github.com/user-attachments/assets/f81a3daf-d170-4c93-9d05-55474dca39ab) | ![WhatsApp Image 2026-07-14 at 00 29 36](https://github.com/user-attachments/assets/d11a5cc5-b79d-48cd-8c86-40ec82f4ceb8) |
+
+
 ## Stack
 
 - `MindAR` for image target tracking and camera session lifecycle
