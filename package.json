@@ -1,0 +1,19 @@
+{
+  "name": "phantasos-ar-visuals",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview --host"
+  },
+  "dependencies": {
+    "mind-ar": "1.2.5",
+    "three": "0.185.0"
+  },
+  "devDependencies": {
+    "vite": "^5.4.11"
+  }
+}
+
