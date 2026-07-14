@@ -1,4 +1,3 @@
-import { MindARThree } from "mind-ar/dist/mindar-image-three.prod.js";
 import { EventEmitter } from "../lib/EventEmitter.js";
 
 export class ARSessionController {
@@ -10,6 +9,7 @@ export class ARSessionController {
     this.anchor = null;
     this.running = false;
     this.ready = false;
+    this.MindARThree = null;
   }
 
   on(eventName, handler) {
@@ -19,7 +19,7 @@ export class ARSessionController {
   async start() {
     try {
       if (!this.mindarThree) {
-        this.#createSession();
+        await this.#createSession();
       }
 
       if (this.running) {
@@ -66,8 +66,13 @@ export class ARSessionController {
     await this.start();
   }
 
-  #createSession() {
-    this.mindarThree = new MindARThree({
+  async #createSession() {
+    if (!this.MindARThree) {
+      const runtime = await import(/* @vite-ignore */ this.tracking.runtimeUrl);
+      this.MindARThree = runtime.MindARThree;
+    }
+
+    this.mindarThree = new this.MindARThree({
       container: this.container,
       imageTargetSrc: this.tracking.imageTargetSrc,
       maxTrack: this.tracking.maxTrack,

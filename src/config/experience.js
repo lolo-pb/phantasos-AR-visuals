@@ -1,5 +1,7 @@
 export const appConfig = {
   tracking: {
+    runtimeUrl:
+      "https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-three.prod.js",
     imageTargetSrc:
       "https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/image-tracking/assets/card-example/card.mind",
     targetIndex: 0,
