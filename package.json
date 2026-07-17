@@ -4,14 +4,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite --host",
-    "dev:https": "vite --host 0.0.0.0 --mode https",
+    "dev": "node scripts/dev-with-qr.js",
+    "dev:https": "node scripts/dev-with-qr.js --https",
     "build": "vite build",
     "preview": "vite preview --host"
   },
-  "dependencies": {},
   "devDependencies": {
     "@vitejs/plugin-basic-ssl": "^1.2.0",
+    "qrcode-terminal": "^0.12.0",
     "vite": "^5.4.11"
   }
 }
