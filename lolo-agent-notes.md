@@ -58,6 +58,30 @@ The current model is:
 /assets/models/rei_ayanami_plush/scene.gltf
 ```
 
+## Changing Targets And Models
+
+For one active marker/model pair, change these spots in `index.html`:
+
+```text
+mindar-image="imageTargetSrc: /assets/targets/images/cat.mind;"
+<a href="/assets/targets/images/cat.jpg" ...>
+<a-asset-item id="rei-plush" src="/assets/models/rei_ayanami_plush/scene.gltf">
+<a-gltf-model src="#rei-plush" position="0 0 0.03" rotation="0 0 0" scale="0.5 0.5 0.5">
+```
+
+The `.mind` file is what MindAR tracks. The `.jpg` is just the image humans can open/print/point the camera at. The `.gltf`/`.glb` is the model that appears after the target is recognized.
+
+Best structure if there will be many:
+
+```text
+public/assets/targets/<target-name>/<target-name>.mind
+public/assets/targets/<target-name>/preview.jpg
+public/assets/models/<model-name>/scene.gltf
+public/assets/models/<model-name>/textures/...
+```
+
+Keep targets and models separate. A target can reuse different models, and a model can be reused by different targets. For many pairs later, make a small config file that maps `targetName -> mind file -> preview image -> model file -> position/rotation/scale`, instead of hardcoding every pair directly in `index.html`.
+
 ## Scripts
 
 - `npm install` installs only the Vite dev tooling.
